@@ -7,10 +7,7 @@ public class Exchange {
     private String timestamp = "";
     private String message = "";
 
-    public class ExchangeHasNoTimeStampException extends Exception{
-
-    };
-    public Exchange(String text) throws ExchangeHasNoTimeStampException{
+    protected Exchange(String text) throws ExchangeHasNoTimeStampException {
         fullText = text;
         //pattern to find strings starting with timestamp
         String pattern = "[0-3][0-9]/[0-1][0-9]/[0-9]{4} [0-2][0-9]:[0-5][0-9]:[0-5][0-9]:";
@@ -30,25 +27,28 @@ public class Exchange {
         }
     }
 
-    public String getExchanger(){
+    protected String getExchanger() {
         return exchanger;
     }
 
-    public String getTimestamp() {
+    protected String getTimestamp() {
         return timestamp;
     }
 
-    public String getMessage() {
+    protected String getMessage() {
         return message;
     }
 
-
-    public String getFullText() {
+    protected String getFullText() {
         return fullText;
     }
 
-    public void addToMessage(String extraText){
-        message += "\n"+extraText;
-        fullText += "\n"+extraText;
+    protected void addToMessage(String extraText) {
+        message += "<br />" + extraText;
+        fullText += "<br />" + extraText;
+    }
+
+    protected class ExchangeHasNoTimeStampException extends Exception {
+
     }
 }

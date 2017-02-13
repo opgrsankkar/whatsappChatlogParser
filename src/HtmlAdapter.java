@@ -5,6 +5,11 @@ public class HtmlAdapter {
         text = "<span >"+text+"</span>";
         return text;
     }
+
+    public static String encloseInP(String text) {
+        text = "<p >" + text + "</p>";
+        return text;
+    }
     public static String encloseInDiv(String text){
         text = "<div >"+text+"</div>";
         return text;
@@ -54,28 +59,37 @@ public class HtmlAdapter {
     }
 
     public static String encloseInChatDiv(Exchange currentExchange, Exchange previousExchange, ArrayList<String> exchangersList) {
-        String exchangerDiv = "";
-        String messageDiv = "";
-        String timestampSpan = "";
-        String finalString = "";
-        if(currentExchange.getExchanger().equals(exchangersList.get(0))){
-            exchangerDiv = encloseInDiv(currentExchange.getExchanger());
-            exchangerDiv = addStyle(exchangerDiv,"font-weight","bold");
-            messageDiv = encloseInDiv(currentExchange.getMessage());
+        String exchangerDiv = encloseInDiv(currentExchange.getExchanger());
+        String messageDiv = currentExchange.getMessage();
+        String timestampSpan = encloseInDiv(currentExchange.getTimestamp());
+        String finalString;
 
-            finalString = exchangerDiv + messageDiv;
-            finalString = encloseInSpan(finalString);
-            finalString = addStyle(finalString,"border-radius","5px");
-            finalString = addStyle(finalString,"background-color","powderblue");
-            finalString = encloseInDiv(finalString);
+        exchangerDiv = addStyle(exchangerDiv, "font-weight", "bold");
+        if (previousExchange != null && currentExchange.getExchanger().equals(previousExchange.getExchanger())) {
+            finalString = messageDiv;
+        } else {
+            finalString = exchangerDiv + "\n" + messageDiv;
+        }
+        finalString = encloseInDiv(finalString);
+        finalString = addStyle(finalString, "max-width", "60%");
+        finalString = addStyle(finalString, "padding", "5px");
+        finalString = addStyle(finalString, "border-radius", "5px");
+        if (previousExchange != null && currentExchange.getExchanger().equals(previousExchange.getExchanger())) {
+            finalString = addStyle(finalString, "margin-top", "2px");
+        } else {
+            finalString = addStyle(finalString, "margin-top", "10px");
+        }
+
+        if (currentExchange.getExchanger().equals(exchangersList.get(0))) {
+            finalString = addStyle(finalString, "box-shadow", "2px 2px 4px 0.5px rgba(0,0,0,0.2)");
+            finalString = addStyle(finalString, "background-color", "beige");
             finalString = addStyle(finalString,"text-align","left");
         }
         if(currentExchange.getExchanger().equals(exchangersList.get(1))){
-            finalString = encloseInSpan(currentExchange.getFullText());
-            finalString = addStyle(finalString,"border-radius","5px");
-            finalString = addStyle(finalString,"background-color","lightgrey");
-            finalString = encloseInDiv(finalString);
+            finalString = addStyle(finalString, "box-shadow", "-2px 2px 4px 0.5px rgba(0,0,0,0.2)");
+            finalString = addStyle(finalString, "background-color", "azure");
             finalString = addStyle(finalString,"text-align","right");
+            finalString = addStyle(finalString, "margin-left", "40%");
         }
 
         return finalString;
