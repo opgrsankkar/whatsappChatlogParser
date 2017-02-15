@@ -7,5 +7,5 @@
  I soon realized this would be more useful in JS than Java.
  
  I've started work in JS.<br>
- Link to that repo will be added when I'm done with the initial commit.
+ [Javascript Page](https://github.com/opgrsankkar/JSWhatsappChatlog)
  
